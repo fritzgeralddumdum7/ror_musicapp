@@ -1,0 +1,23 @@
+<%= form_with model: @artist do |f| %>
+  <%= f.label :first_name %>
+  <%= f.text_field :first_name %>
+  <br/>
+
+  <%= f.label :middle_initial %>
+  <%= f.text_field :middle_initial %>
+  <br/>
+
+  <%= f.label :last_name %>
+  <%= f.text_field :last_name %>
+  <br/>
+
+  <%= f.label :gender %>
+  <%= f.radio_button :age, "male" %>
+  <%= f.label :age_child, "Male" %>
+  <%= f.radio_button :age, "female" %>
+  <%= f.label :age_adult, "Female" %>
+
+
+  <%= f.submit %>
+<% end %>
+<%= link_to 'Go back', :artists %>
