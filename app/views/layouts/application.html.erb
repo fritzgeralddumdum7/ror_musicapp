@@ -7,12 +7,23 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'Hello', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'index', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="bg-gray-50">
+    <% flash.each do |key, value| %>
+      <% if key == "notice" %>
+        <div class="w-full bg-indigo-800 text-white p-4 text-center fixed">
+          <%= value %>
+        </div>
+      <% elsif key == "error" %>
+        <div class="w-full bg-red-800 text-white p-4 text-center fixed">
+          <%= value %>
+        </div>
+      <% end %>
+    <% end %>
     <%= yield %>
   </body>
 </html>

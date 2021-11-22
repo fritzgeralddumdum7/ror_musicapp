@@ -1,0 +1,39 @@
+%div{ class: 'bg-white h-screen bg-gray-50' }
+  %div{ class: 'flex justify-center' }
+    %div{ class: 'w-1/2 pb-10'}
+      %div{ class: 'flex justify-between' }
+        %h1{ class: 'text-4xl font-bold uppercase py-12' }
+          Tracks
+        %div{ class: 'py-12 flex gap-4' }
+          =link_to albums_path, class: 'flex items-center text-xl font-bold text-indigo-800' do
+            Albums
+          %h1{ class: 'text-gray-400 flex items-center '} /
+          =link_to :new_track, class: 'flex items-center text-xl font-bold text-indigo-800' do
+            New Track
+
+      %div{ class: 'flex flex-col w-full gap-6 mt-4' }
+
+        - @tracks.each do |track|
+          %div{ class: 'border shadow-lg flex flex-col flex items-center p-2' }
+            %div{ class: 'py-4 flex w-full px-4 gap-5' }
+              %div{ class: 'block'}
+                %h1{ class: 'font-bold text-lg mb-3' }
+                  = track.name
+                %iframe{ src: track.url, width: '250', height: 'auto' }
+              %div{ class: 'flex flex-col mt-10 justify-between'}
+                %div
+                  %p{ class: 'text-gray-600 mb-2' }
+                    = track.credits.truncate(150)
+                  %div{ class: 'flex flex-col' }
+                    %span{ class: 'text-sm mb-2' }
+                      %label{ class: 'font-semibold mr-1' } Duration:
+                      %label 4 mins 34 secs
+                    %span{ class: 'text-sm' }
+                      %label{ class: 'font-semibold mr-1' } Available:
+                      %label
+                        = track.available ? 'Yes' : 'No'
+                %div{ class: 'flex' }
+                  =link_to edit_track_path(track.id), class: 'font-bold text-indigo-800 hover:underline pt-3 mr-4' do
+                    Edit
+                  =link_to track_path(track.id), method: :delete, data: { confirm: "Are you sure?" }, class: 'font-bold text-indigo-800 hover:underline pt-3' do
+                    Delete

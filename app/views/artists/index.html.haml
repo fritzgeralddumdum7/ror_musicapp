@@ -1,40 +1,31 @@
-%div{ class: 'bg-white h-screen' }
+%div{ class: 'bg-white h-screen bg-gray-50' }
   %div{ class: 'flex justify-center' }
     %div{ class: 'w-3/4 px-20'}
       %h1{ class: 'text-4xl font-bold uppercase py-12' }
         ARTISTS
+        
+      %div{ class: 'grid grid-cols-4 w-full gap-6' }
       
-      %div{ class: 'grid grid-cols-3 w-full gap-6' }
-        %div{ class: 'border shadow-lg flex flex-col flex items-center' }
-          %img{ src: 'https://townsquare.media/site/366/files/2021/03/all_time_low_2021.jpg', class: 'object-cover w-full' }
-            %div{ class: 'bg-indigo-800 py-4 px-6 w-3/5 -mt-7 text-white text-center' } Nov. 19, 2021
-          %div{ class: 'p-6' }
-            %h1{ class: 'font-bold text-2xl uppercase mb-4 text-center' } Tailor Swift
-            %P{ class: 'text-gray-700 mb-4 leading-6' } This is a sample bio for Tailor swift and the quick brown fox jump over the lazy dog.
-            =link_to artists_path, class: 'font-bold text-lg text-indigo-800 hover:underline' do
-              Albums
-
-        %div{ class: 'border shadow-lg flex flex-col flex items-center' }
-          %img{ src: 'https://townsquare.media/site/366/files/2021/03/all_time_low_2021.jpg', class: 'object-cover w-full' }
-            %div{ class: 'bg-indigo-800 py-4 px-6 w-3/5 -mt-7 text-white text-center' } Nov. 19, 2021
-          %div{ class: 'p-6' }
-            %h1{ class: 'font-bold text-2xl uppercase mb-4 text-center' } Tailor Swift
-            %P{ class: 'text-gray-700 mb-4 leading-6' } This is a sample bio for Tailor swift and the quick brown fox jump over the lazy dog.
-            =link_to artists_path, class: 'font-bold text-lg text-indigo-800 hover:underline' do
-              Albums
-
-        %div{ class: 'border shadow-lg flex flex-col flex items-center' }
-          %img{ src: 'https://townsquare.media/site/366/files/2021/03/all_time_low_2021.jpg', class: 'object-cover w-full' }
-            %div{ class: 'bg-indigo-800 py-4 px-6 w-3/5 -mt-7 text-white text-center' } Nov. 19, 2021
-          %div{ class: 'p-6' }
-            %h1{ class: 'font-bold text-2xl uppercase mb-4 text-center' } Tailor Swift
-            %P{ class: 'text-gray-700 mb-4 leading-6' } This is a sample bio for Tailor swift and the quick brown fox jump over the lazy dog.
-            =link_to artists_path, class: 'font-bold text-lg text-indigo-800 hover:underline' do
-              Albums
+        - @artists.each do |artist|
+          %div{ class: 'border shadow-lg flex flex-col flex items-center' }
+            - if artist.avatar.attached?
+              = image_tag artist.avatar, class: 'h-40 w-full object-cover'
+            - else
+              = image_tag asset_path('default_avatar.png'), class: 'h-40 w-full object-cover'
+            %div{ class: 'bg-indigo-800 py-4 px-6 w-3/5 -mt-7 text-white text-center' }
+              = artist.name.truncate(13)
+            %div{ class: 'p-6 w-full' }
+              %div{ class: 'flex justify-between w-full text-gray-700' }
+                =link_to albums_path, class: 'font-bold hover:underline' do
+                  Albums
+                =link_to edit_artist_path(artist.id), class: 'font-bold hover:underline' do
+                  Edit
+                =link_to artist_path(artist.id), method: :delete, data: { confirm: "Are you sure?" }, class: 'font-bold hover:underline' do
+                  Delete
 
       %div{ class: 'w-full py-20' }
         %div{ class: 'w-full grid grid-cols-2' }
-          %img{ src: 'https://preview.colorlib.com/theme/djoz/img/about/xabout.png.pagespeed.ic.UQ_7DY9Axc.webp' }
+          %img{ src: asset_path('girl_music.webp') }
           %div{ class: 'px-6 flex flex-col justify-center' }
             %h1{ class: 'font-bold text-4xl uppercase mb-6' } Add New Artist
             %p{ class: 'text-gray-600 mb-7 leading-6' } The quick brown fox jump over the lazy dog near the bank of the river. The quick brown fox jump over the lazy dog near the bank of the river. The quick brown fox jump over the lazy dog near the bank of the river.

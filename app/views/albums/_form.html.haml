@@ -1,0 +1,42 @@
+= form_with model: @album, class: 'w-full' do |f|
+  %div{ class: 'grid grid-cols-2 gap-6 mb-6' }
+
+    %div{ class: 'flex flex-col gap-2' }
+      = f.label :cover_art
+      = f.file_field :cover_art, accept:'image/*'
+
+    %div{ class: 'flex flex-col gap-2' }
+      %h1 Released
+      %div{ class: 'flex gap-2 items-center h-full w-1/2' }
+        %div{ class: 'flex-1' }
+          = f.radio_button :released, "Yes"
+          = f.label :yes
+        %div{ class: 'flex-1' }
+          = f.radio_button :released, "No"
+          = f.label :no
+
+    %div{ class: 'flex flex-col' }
+      %h1 Kind
+      %div{ class: 'flex gap-2 items-center h-full w-full' }
+        %div{ class: 'flex-1' }
+          = f.radio_button :kind, "EP"
+          = f.label :ep
+        %div{ class: 'flex-1' }
+          = f.radio_button :kind, "LP"
+          = f.label :lp
+        %div{ class: 'flex-1' }
+          = f.radio_button :kind, "Single"
+          = f.label :single
+
+    %div{ class: 'w-full' }
+      = f.text_field :name, class: "#{f.object.errors[:name].present? ? 'border-red-500 border' : 'border-gray-500 border'} p-2 w-full", placeholder: 'Name'
+      - if f.object.errors[:name].present?
+        %span{ class: 'text-red-500' }= f.object.errors[:name].to_sentence
+
+    %div{ class: 'w-full' }
+      = f.text_field :length, class: "#{f.object.errors[:length].present? ? 'border-red-500 border' : 'border-gray-500 border'} p-2 w-full", placeholder: 'Time'
+      - if f.object.errors[:length].present?
+        %span{ class: 'text-red-500' }= f.object.errors[:length].to_sentence
+
+  %div{ class: 'w-full flex justify-end mt-2' }
+    = f.submit class: 'px-4 py-2 w-40 bg-indigo-800 text-white hover:bg-indigo-700 cursor-pointer'
