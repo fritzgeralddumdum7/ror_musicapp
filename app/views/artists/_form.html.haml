@@ -1,25 +1,55 @@
-= form_with model: @artist, class: 'w-full' do |f|
+= form_with model: @artist, class: 'w-full bg-gray-50 pb-12' do |f|
+  %div{ class: 'relative h-2/5 mb-32 rounded'}
+    - if @artist.cover_art.attached?
+      = image_tag @artist.cover_art, class: 'h-96 w-full object-cover rounded', id: 'cover_art_preview'
+    - else
+      = image_tag asset_path('default_cover_photo.png'), class: 'h-96 w-full object-cover rounded', id: 'cover_art_preview'
+    %div{ class: 'rounded-full h-48 w-48 flex items-center justify-center bg-gray-200 p-1 absolute -bottom-24', style: 'left: 42%' }
+      - if @artist.avatar.attached?
+        = image_tag @artist.avatar, class: 'h-full w-full object-cover rounded-full rounded', id: 'avatar_preview'
+      - else
+        = image_tag asset_path('default_avatar.png'), class: 'h-full w-full object-cover rounded-full rounded', id: 'avatar_preview'
   %div{ class: 'grid grid-cols-2 gap-6 mb-6' }
     %div{ class: 'flex flex-col gap-2' }
-      = f.label :cover_photo
-      = f.file_field :cover_photo, accept:'image/*'
+      = f.label :cover_art
+      = f.file_field :cover_art, accept:'image/*'
     %div{ class: 'flex flex-col gap-2' }
       = f.label :avatar
       = f.file_field :avatar, accept:'image/*'
 
     %div{ class: 'w-full' }
-      = f.text_field :name, class: "#{f.object.errors[:name].present? ? 'border-red-500 border' : 'border-gray-500 border'} p-2 w-full", placeholder: 'Name'
+      = f.text_field :name, class: "#{f.object.errors[:name].present? ? 'border-red-500 border' : 'border-gray-500 border'} p-2 w-full rounded", placeholder: 'Name'
       - if f.object.errors[:name].present?
         %span{ class: 'text-red-500' }= f.object.errors[:name].to_sentence
 
     %div{ class: 'w-full' }
-      = f.text_field :permalink, class: "#{f.object.errors[:permalink].present? ? 'border-red-500 border' : 'border-gray-500 border'} p-2 w-full", placeholder: 'Permalink'
-      - if f.object.errors[:permalink].present?
-        %span{ class: 'text-red-500' }= f.object.errors[:permalink].to_sentence
+      = f.date_field :formed_at, class: "#{f.object.errors[:formed_at].present? ? 'border-red-500 border' : 'border-gray-500 border'} p-2 w-full rounded", placeholder: 'Name'
+      - if f.object.errors[:formed_at].present?
+        %span{ class: 'text-red-500' }= f.object.errors[:formed_at].to_sentence
   
-  = f.text_area :bio, class: "#{f.object.errors[:bio].present? ? 'border-red-500 border' : 'border-gray-500 border'} p-2 w-full", rows: 5, placeholder: 'Write something for the bio...'
+  = f.text_area :bio, class: "#{f.object.errors[:bio].present? ? 'border-red-500 border' : 'border-gray-500 border'} p-2 w-full rounded", rows: 5, placeholder: 'Write something for the bio...'
   - if f.object.errors[:bio].present?
     %span{ class: 'text-red-500' }= f.object.errors[:bio].to_sentence
 
-  %div{ class: 'w-full flex justify-end mt-2' }
-    = f.submit class: 'px-4 py-2 w-40 bg-indigo-800 text-white hover:bg-indigo-700 cursor-pointer'
+  %div{ class: 'w-full flex justify-end mt-4' }
+    = f.submit class: 'px-4 py-2 w-40 bg-indigo-800 text-white hover:bg-indigo-700 cursor-pointer rounded'
+
+:javascript
+  function showImage (src, target) {
+    var fileReader = new FileReader()
+    fileReader.onload = function (e) { 
+      target.src = this.result
+    }
+    src.addEventListener("change", function () {
+      fileReader.readAsDataURL(src.files[0])
+    })
+  }
+
+  var coverArtSrc = document.getElementById("artist_cover_art")
+  var coverArtTarget = document.getElementById("cover_art_preview")
+  showImage(coverArtSrc, coverArtTarget)
+
+  var avatarSrc = document.getElementById("artist_avatar")
+  var avatarTarget = document.getElementById("avatar_preview")
+  showImage(avatarSrc, avatarTarget)
+  

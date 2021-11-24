@@ -1,8 +1,12 @@
-%div{ class: 'bg-white h-screen' }
+%div{ class: 'bg-white h-screen bg-gray-50' }
   %div{ class: 'flex justify-center' }
-    %div{ class: 'w-1/2'}
-      %h1{ class: 'text-4xl font-bold uppercase py-12' }
-        Add new album
+    %div{ class: 'w-1/2 pb-12'}
+      %div{ class: 'flex justify-between' }
+        %h1{ class: 'text-2xl font-bold uppercase py-12' }
+          Add new album
+        %div{ class: 'py-12 flex gap-4' }
+          =link_to albums_path, class: 'flex items-center text-xl font-bold text-indigo-800' do
+            < Go back
       
       = render 'form'
       

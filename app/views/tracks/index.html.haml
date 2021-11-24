@@ -10,29 +10,24 @@
           %h1{ class: 'text-gray-400 flex items-center '} /
           =link_to :new_track, class: 'flex items-center text-xl font-bold text-indigo-800' do
             New Track
+      - if @tracks.empty?
+        %h1{ class: 'w-full text-center font-semibold text-4xl text-gray-400 border-t-2 py-10' } No data available
 
       %div{ class: 'flex flex-col w-full gap-6 mt-4' }
-
         - @tracks.each do |track|
           %div{ class: 'border shadow-lg flex flex-col flex items-center p-2' }
             %div{ class: 'py-4 flex w-full px-4 gap-5' }
-              %div{ class: 'block'}
+              %div{ class: 'w-48 flex-col'}
+                = image_tag asset_path('pict--audio-wave-audio-vector-stencils-library.png'), class: 'h-full w-32 w-full object-cover rounded shadow'
+              %div{ class: 'flex-1 flex-col justify-between'}
                 %h1{ class: 'font-bold text-lg mb-3' }
                   = track.name
-                %iframe{ src: track.url, width: '250', height: 'auto' }
-              %div{ class: 'flex flex-col mt-10 justify-between'}
                 %div
-                  %p{ class: 'text-gray-600 mb-2' }
-                    = track.credits.truncate(150)
-                  %div{ class: 'flex flex-col' }
-                    %span{ class: 'text-sm mb-2' }
-                      %label{ class: 'font-semibold mr-1' } Duration:
-                      %label 4 mins 34 secs
-                    %span{ class: 'text-sm' }
-                      %label{ class: 'font-semibold mr-1' } Available:
-                      %label
-                        = track.available ? 'Yes' : 'No'
-                %div{ class: 'flex' }
+                  %p{ class: 'text-gray-600 mb-4 text-sm' }
+                    = track.credits.truncate(100)
+                %audio{ :controls => 'controls', class: 'w-full' }
+                  %source{ :src => url_for(track.url) }
+                %div{ class: 'flex justify-end mt-4' }
                   =link_to edit_track_path(track.id), class: 'font-bold text-indigo-800 hover:underline pt-3 mr-4' do
                     Edit
                   =link_to track_path(track.id), method: :delete, data: { confirm: "Are you sure?" }, class: 'font-bold text-indigo-800 hover:underline pt-3' do

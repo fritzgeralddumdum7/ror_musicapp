@@ -6,7 +6,7 @@ class TracksController < ApplicationController
   end
 
   def new
-    @track = Track.new
+    @track = Track.new(:available => "No")
   end
   
   def create
@@ -33,13 +33,13 @@ class TracksController < ApplicationController
   def destroy
     @track.destroy
 
-    redirect_to tracks_path
+    redirect_to tracks_path, notice: "Track has been deleted successfully."
   end
 
   private
   
   def track_params
-    params.required(:track).permit(:name, :url, :credits)
+    params.required(:track).permit(:name, :url, :credits, :available)
   end
 
   def set_track

@@ -33,7 +33,7 @@ class AlbumsController < ApplicationController
   def destroy
     @album.destroy
 
-    redirect_to albums_path
+    redirect_to albums_path, notice: "Track has been deleted successfully."
   end
 
   private
@@ -43,10 +43,11 @@ class AlbumsController < ApplicationController
 
     if params[:album][:released] == "Yes"
       is_released = true
+      params[:album][:released_at] = Time.now
     end
 
     params[:album][:released] = is_released
-    params.required(:album).permit(:name, :kind, :length, :cover_art, :released)
+    params.required(:album).permit(:name, :kind, :cover_art, :released, :released_at)
   end
 
   def set_album

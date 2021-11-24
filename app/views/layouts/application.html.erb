@@ -15,11 +15,11 @@
   <body class="bg-gray-50">
     <% flash.each do |key, value| %>
       <% if key == "notice" %>
-        <div class="w-full bg-indigo-800 text-white p-4 text-center fixed">
+        <div class="w-full bg-indigo-800 text-white p-4 text-center">
           <%= value %>
         </div>
       <% elsif key == "error" %>
-        <div class="w-full bg-red-800 text-white p-4 text-center fixed">
+        <div class="w-full bg-red-800 text-white p-4 text-center">
           <%= value %>
         </div>
       <% end %>

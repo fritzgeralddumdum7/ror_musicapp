@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_055520) do
 
   create_table "artists", force: :cascade do |t|
     t.string "name"
-    t.string "permalink"
+    t.string "slug"
     t.text "bio"
     t.datetime "formed_at"
     t.boolean "verified", default: false
